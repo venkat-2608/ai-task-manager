@@ -11,6 +11,11 @@ function App() {
     setTask("");
   };
 
+  const deleteTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>AI Task Manager</h1>
@@ -26,7 +31,15 @@ function App() {
 
       <ul>
         {tasks.map((t, index) => (
-          <li key={index}>{t}</li>
+          <li key={index}>
+            {t}
+            <button
+              onClick={() => deleteTask(index)}
+              style={{ marginLeft: "10px" }}
+            >
+              Delete
+            </button>
+          </li>
         ))}
       </ul>
     </div>
