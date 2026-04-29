@@ -2,13 +2,20 @@ import { useState } from "react";
 
 function App() {
   const [task, setTask] = useState("");
+  const [priority, setPriority] = useState("Low");
   const [tasks, setTasks] = useState([]);
 
   const addTask = () => {
     if (task.trim() === "") return;
 
-    setTasks([...tasks, task]);
+    const newTask = {
+      text: task,
+      priority: priority
+    };
+
+    setTasks([...tasks, newTask]);
     setTask("");
+    setPriority("Low");
   };
 
   const deleteTask = (index) => {
@@ -27,12 +34,24 @@ function App() {
         onChange={(e) => setTask(e.target.value)}
       />
 
-      <button onClick={addTask}>Add Task</button>
+      <select
+        value={priority}
+        onChange={(e) => setPriority(e.target.value)}
+        style={{ marginLeft: "10px" }}
+      >
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+      </select>
+
+      <button onClick={addTask} style={{ marginLeft: "10px" }}>
+        Add Task
+      </button>
 
       <ul>
         {tasks.map((t, index) => (
           <li key={index}>
-            {t}
+            {t.text} - <b>{t.priority}</b>
             <button
               onClick={() => deleteTask(index)}
               style={{ marginLeft: "10px" }}
