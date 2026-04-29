@@ -10,7 +10,8 @@ function App() {
 
     const newTask = {
       text: task,
-      priority: priority
+      priority: priority,
+      completed: false
     };
 
     setTasks([...tasks, newTask]);
@@ -20,6 +21,12 @@ function App() {
 
   const deleteTask = (index) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  };
+
+  const toggleTask = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasks(updatedTasks);
   };
 
@@ -50,8 +57,21 @@ function App() {
 
       <ul>
         {tasks.map((t, index) => (
-          <li key={index}>
+          <li
+            key={index}
+            style={{
+              textDecoration: t.completed ? "line-through" : "none"
+            }}
+          >
             {t.text} - <b>{t.priority}</b>
+
+            <button
+              onClick={() => toggleTask(index)}
+              style={{ marginLeft: "10px" }}
+            >
+              {t.completed ? "Undo" : "Complete"}
+            </button>
+
             <button
               onClick={() => deleteTask(index)}
               style={{ marginLeft: "10px" }}
